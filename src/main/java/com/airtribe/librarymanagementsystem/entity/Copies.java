@@ -17,6 +17,13 @@ public class Copies {
         total = this.total + copies;
         available = this.available+copies;
     }
+    public void removeCopies(int copies) {
+        if (copies > available) {
+            throw new IllegalStateException("Cannot remove more copies than available");
+        }
+        total = this.total - copies;
+        available = this.available-copies;
+    }
 
     public int getAvailable() {
         return available;

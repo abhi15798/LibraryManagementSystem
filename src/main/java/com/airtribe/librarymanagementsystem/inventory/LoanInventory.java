@@ -25,4 +25,7 @@ public class LoanInventory {
     public List<Loan>getActiveLoanForBook(String ISBN){
         return loans.stream().filter(loan -> loan.getISBN().equals(ISBN) && loan.getReturnDate() ==null ).collect(Collectors.toList());
     }
+    public boolean hasAnyActiveLoans(){
+        return loans.stream().anyMatch(loan -> loan.getReturnDate() ==null);
+    }
 }

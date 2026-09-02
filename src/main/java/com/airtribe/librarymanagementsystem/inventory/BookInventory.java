@@ -51,7 +51,7 @@ public class BookInventory {
     }
     public void removeBook(String ISBN) throws BookNotFoundException{
         if(catalog.get(ISBN)==null){
-            throw new BookNotFoundException("Please provide the corred ISBN");
+            throw new BookNotFoundException("Please provide the correct ISBN");
         }
         if(availableCopies.get(ISBN).getTotal() > availableCopies.get(ISBN).getAvailable()){
             throw new IllegalStateException("This book is currently issued by Some Patron. Cannot remove");
@@ -70,6 +70,18 @@ public class BookInventory {
     }
     public List<Book> getAllBooks(){
         return new ArrayList<>(catalog.values());
+    }
+    public void removeCopies(String ISBN,int copies){
+        if(!catalog.containsKey(ISBN)){
+            throw new BookNotFoundException("This book is currently not available here");
+        }
+        else if(availableCopies.get(ISBN).getAvailable()<copies){
+            throw new BookNotAvailableException("No of copies not available, Total copies available - "+availableCopies.get(ISBN).getAvailable());
+        }
+        else{
+            Copies oldCopies = availableCopies.get(ISBN);
+            oldCopies.removeCopies(copies);
+        }
     }
 
 }
